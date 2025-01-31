@@ -1,33 +1,44 @@
-## **README - Micro Frontends with Redux Integration**
+## **README - Micro Frontends with Redux and Module Federation Integration**
 
 ### **Project Overview**
 
-In the last two days, I have been working on integrating a centralized Redux store into a **micro frontend architecture**. The goal of this project is to manage application state effectively and provide seamless communication between the **host** and its **mini frontends**. The Redux store has been configured within the **host** application to allow the **mini frontends** to access shared state. However, an issue arose where the state flow works from the host to the mini components but not from the mini components to the host. The problem is related to the `reduxContext` being _null_ in the mini frontends.
+In the last two days, I have integrated a **centralized Redux store** and **Module Federation** into the architecture of this application, allowing seamless communication between the **host** application and its **mini frontends**. This setup ensures that shared state management is handled via Redux, while **Module Federation** enables dynamic loading of micro frontends in the host app. While the state flow works from the **host** to the **mini components**, an issue arose with state propagation from the **mini frontends** to the **host** due to a `reduxContext` being _null_ in the mini apps.
 
 ### **What Was Done**
 
-#### 1. **Centralized Store in Host**
-   - I created a **centralized Redux store** in the **host application** to manage the shared state for the entire application, including the mini frontends.
-   - The store was configured with **actions** and **reducers** to handle state changes.
-   - The Redux store was integrated into the **host** using `<Provider>` from `react-redux`, enabling access to the store for all components in the **host**.
+#### 1. **Centralized Redux Store in Host**
+   - A **centralized Redux store** was created in the **host application** to manage the shared state for the entire application, including the mini frontends.
+   - The Redux store was configured with **actions** and **reducers** to handle state changes.
+   - The **host** app uses `<Provider>` from `react-redux` to make the Redux store accessible to all components in the **host** and **mini frontends**.
 
-#### 2. **Access to Mini Frontends**
-   - I configured the **mini frontends** to have access to the centralized store.
-   - The **mini applications** were connected to the Redux store by wrapping them with the `Provider` in their entry points, allowing them to interact with the store.
-   - I ensured that the **mini applications** could **dispatch actions** to the Redux store and **read** from the store using the `useSelector` and `useDispatch` hooks provided by `react-redux`.
+#### 2. **Module Federation Configuration**
+   **Module Federation** was set up to load the **mini frontends** dynamically into the **host app**. The configuration was carried out in both the **host** and **mini frontends** to ensure proper sharing of modules between them.
+   
+   - **Host Configuration:**
+     - The **host** is responsible for loading the **mini frontends** dynamically using Webpack's **Module Federation Plugin**.
+     - The **host** exposes a container and configuration for the **mini frontends**, specifying which remote components to load.
+     - The **Module Federation Plugin** is configured in the Webpack configuration of the host to enable sharing of the relevant components and utilities with the mini frontends.
+   
+   - **Mini Frontend Configuration:**
+     - Each **mini frontend** was set up with the **Module Federation Plugin** to allow them to be **consumed** by the host.
+     - The mini frontends expose specific components and their configurations, which are then used by the host.
+     - The mini apps are configured to **consume** shared modules like Redux actions, reducers, or components from the host.
+     - **Dynamic loading** of these components is achieved using `import()` statements and the **remote module** configuration in Webpack.
 
 #### 3. **State Flow Issue**
    - The state is successfully flowing from the **host** to the **mini components**. However, I encountered an issue where state changes in the **mini frontends** are not reflecting back to the **host**.
-   - Upon investigating, I found that the `reduxContext` in the **mini components** is _null_, preventing the updates from propagating back to the host.
+   - Upon investigating, I found that the `reduxContext` in the **mini components** is _null_, preventing the updates from propagating back to the **host**.
 
 ### **Steps Taken for Configuration**
 
 1. **Host Configuration:**
    - The Redux store is initialized and provided to all components inside the **host** app using `<Provider store={store}>`.
-   
+   - **Module Federation** is configured in Webpack to enable dynamic loading of **mini frontends** as **remote modules**.
+
 2. **Mini Frontend Configuration:**
    - Each **mini frontend** was wrapped with the `Provider` to ensure access to the Redux store.
-   - I ensured the `Provider` was correctly placed in the **mini app entry file** to ensure that the state could be accessed and manipulated as needed.
+   - The **Module Federation Plugin** in Webpack was configured to expose and consume modules for state management and components.
+   - The **mini frontends** expose components that are dynamically loaded into the host when needed.
 
 3. **State Access:**
    - State was accessed in the **mini frontends** using `useSelector` and modified using `useDispatch`.
@@ -38,12 +49,13 @@ In the last two days, I have been working on integrating a centralized Redux sto
 - **State Flow Direction:**
   The primary challenge I encountered was with the state flow. While the **host** was able to send data to the **mini frontends**, the state changes from the **mini frontends** were not reflecting in the **host**. This was due to the `reduxContext` being _null_ in the **mini components**, blocking the updates from propagating.
 
-- **Redux Context Handling:**
-  I have traced the issue to how the `Provider` context is being shared between the **host** and **mini frontends**, and I plan to work on resolving this issue by ensuring proper context propagation and reconfiguration of the Redux setup.
+- **Module Federation Integration:**
+  Setting up **Module Federation** for dynamic loading of the mini frontends and ensuring they communicate with the host was challenging. It required careful configuration of both the **host** and **mini frontends** to ensure they can share components and dependencies efficiently.
 
 ### **Achievements**
 
 - Successfully integrated **Redux store** with a **micro frontend architecture**.
+- Configured **Module Federation** to dynamically load **mini frontends** into the **host** app.
 - Managed to set up **centralized state** in the **host**, with **mini frontends** capable of accessing and interacting with the shared state.
 - Identified the issue with the state propagation and set the groundwork for fixing the `reduxContext` issue.
 
