@@ -1,0 +1,133 @@
+/* Email compose  */
+.email-compose-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.email-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.email-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.email-input,
+.email-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.email-textarea {
+  height: 120px;
+  resize: none;
+}
+
+.email-submit {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.email-submit:hover {
+  background-color: #0056b3;
+}
+
+/* sidebar button */
+
+.side-button {
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.side-button:hover {
+  color: blue;
+  background-color: #e0e0e0;
+}
+
+/* sidebar  */
+
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-right: 2px solid #ccc;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* inbox,outbox,draft and all mails css */
+
+.email-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.inner-inbox-container{
+  overflow: auto;
+}
+
+.email-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.email-item {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+
+.email-item p {
+  margin: 5px 0;
+}
+
+.email-item strong {
+  color: #333;
+}
